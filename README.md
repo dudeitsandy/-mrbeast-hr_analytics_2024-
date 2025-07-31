@@ -1,62 +1,44 @@
 # MrBeast HR Analytics Platform
 
-A comprehensive HR analytics platform for MrBeast Industries, featuring hiring metrics, employee analytics, and data quality insights. This project demonstrates senior-level technical capabilities with production-ready features for HR data integration, transformation, and visualization.
+HR analytics platform integrating recruiting and payroll data with REST API and interactive dashboard.
 
-## 🎯 Project Overview
+## Overview
 
-This platform integrates data from two HR systems (Recruiting and Payroll) to build a complete pipeline that extracts, transforms, and loads data into a centralized SQL database, then creates a REST API and visualizes insights for the People Ops and Leadership teams.
+This project demonstrates a complete HR data pipeline that:
+- Loads data from multiple HR systems into PostgreSQL
+- Transforms data using SQL with time-to-hire calculations
+- Serves cleaned data via FastAPI REST endpoints
+- Visualizes insights through Streamlit dashboard
+- Automates daily data refresh with cron scheduling
 
-### Key Features
-- **Data Integration**: Loads HR data from multiple sources into PostgreSQL
-- **Data Transformation**: SQL-based ETL with time-to-hire calculations
-- **REST API**: FastAPI backend with 9 endpoints serving cleaned data
-- **Data Visualization**: Interactive Streamlit dashboard with leadership metrics
-- **Automation**: Daily pipeline with cron scheduling
-- **Production Ready**: Docker containerization and comprehensive error handling
+## Requirements
 
-## 🚀 Quick Start
-
-### Prerequisites
 - Python 3.8+
 - PostgreSQL 12+
 - PowerShell (Windows) or Bash (Linux)
 
-### One-Command Setup (Recommended)
+## Quick Start
 
-**For Windows:**
+### Windows
 ```bash
 .\start_api.bat
 ```
 
-**For Linux/Mac:**
+### Linux/Mac
 ```bash
 ./run_master.sh full
 ```
 
-This single command will:
-- ✅ Check prerequisites
-- ✅ Setup virtual environment
-- ✅ Install dependencies
-- ✅ Setup database
-- ✅ Start API and dashboard
-- ✅ Open dashboard at http://localhost:8501
+The dashboard will be available at http://localhost:8501
 
-### Manual Setup (Alternative)
+## Manual Setup
 
-If you prefer step-by-step setup:
-
-1. **Clone and setup:**
-```bash
-git clone <repository-url>
-cd mrbeast-hris-analytics
-```
-
-2. **Install dependencies:**
+1. Install dependencies:
 ```bash
 pip install -r requirements.txt
 ```
 
-3. **Setup database:**
+2. Setup database:
 ```bash
 # Windows
 .\scripts\run_pipeline.ps1
@@ -65,245 +47,211 @@ pip install -r requirements.txt
 ./scripts/run_pipeline.sh
 ```
 
-4. **Start the API:**
+3. Start API:
 ```bash
 # Windows
 .\api\run_api.ps1
 
 # Linux
-./api\run_api.sh
+.\api\run_api.sh
 ```
 
-5. **Launch the dashboard:**
+4. Start dashboard:
 ```bash
 # Windows
 .\visualizations\run_dashboard.ps1
 
 # Linux
-./visualizations\run_dashboard.sh
+.\visualizations\run_dashboard.sh
 ```
 
-6. **Access the dashboard:**
-   - Open your browser to: http://localhost:8501
-   - API documentation: http://localhost:8000/docs
+## API Endpoints
 
-## 📊 Core Analytics Features
-
-### 1. Hiring Performance Metrics
-- **Time-to-Hire Analysis**: Average time-to-hire by department
-- **Conversion Rates**: Application to hire conversion by role
-- **Pipeline Visualization**: Hiring funnel analysis
-- **Hiring Success Metrics**: Detailed conversion rate analysis
-
-### 2. Employee Analytics
-- **Employment Type Distribution**: Full-time vs Contractor analysis
-- **Salary Analysis**: By role and department with currency formatting
-- **Tenure Analysis**: Employee retention insights with data quality checks
-- **Employee Source Analysis**: Application process vs direct hires
-
-### 3. Data Quality Insights
-- **Realistic HR Data Handling**: Graceful degradation with missing data
-- **Data Coverage Reporting**: Quality validation metrics
-- **Role-Department Mapping**: Validated one-to-one mappings
-- **Gap Analysis**: Data quality insights and warnings
-
-### 4. Leadership Metrics (CHRO/CPO Focus)
-- **Strategic Hiring Insights**: Department-level hiring performance
-- **Cost Analysis**: Employment type cost breakdown
-- **Retention Analytics**: Employee tenure and retention patterns
-- **Data Quality Reporting**: Realistic HR data scenario explanations
-
-## 🔧 Technical Architecture
-
-### Database Design
-- **PostgreSQL 12+**: ACID-compliant database with advanced analytics
-- **Normalized Schema**: Well-structured tables with appropriate data types
-- **Analytics Views**: SQL views for time-to-hire and other calculations
-- **Data Quality**: Realistic HR data scenario handling
-
-### API Design
-- **FastAPI Backend**: High-performance async framework
-- **RESTful Endpoints**: 9 endpoints following REST conventions
-- **Error Handling**: Comprehensive error responses (404s, 500s)
-- **Authentication**: Basic HTTP authentication
-- **Documentation**: Auto-generated OpenAPI/Swagger docs
-
-### Data Pipeline
-- **ETL Process**: Extract, Transform, Load from Excel sources
-- **Data Cleaning**: Standardization and validation
-- **SQL Transformations**: Advanced analytics with views
-- **Automation**: Daily pipeline with cron scheduling
-
-### Visualization
-- **Streamlit Dashboard**: Interactive web application
-- **Plotly Charts**: Professional, interactive visualizations
-- **Real-time Updates**: Live data refresh capabilities
-- **MrBeast Branding**: Professional styling and theming
-
-## 📋 API Endpoints
-
-### Core Endpoints (Required)
-- `GET /hiring-metrics` - Average time-to-hire by department
+### Required Endpoints
+- `GET /hiring-metrics` - Time-to-hire by department
 - `GET /applicants/status-summary` - Applicant counts by status
 
-### Enhanced Endpoints
-- `GET /master-employee-view` - Comprehensive employee data
+### Additional Endpoints
+- `GET /master-employee-view` - Employee data
 - `GET /employment-types` - Employment type distribution
-- `GET /department-analytics` - Department-level analytics
-- `GET /role-department-validation` - Role-department mapping
+- `GET /department-analytics` - Department analytics
 - `GET /data-quality-analysis` - Data quality insights
 - `GET /hiring-success-analysis` - Hiring success metrics
 - `GET /employee-source-analysis` - Employee source analysis
 
-## 🔄 Automation & Scheduling
+## Database Schema
 
-### Daily Pipeline
-- **Cron Scheduling**: `0 2 * * * /path/to/scripts/daily_pipeline.sh`
-- **Cross-Platform**: PowerShell (Windows) and Bash (Linux) scripts
-- **Error Handling**: Comprehensive logging and alerting
-- **Monitoring**: Pipeline health checks and status reporting
+The platform uses PostgreSQL with the following key tables:
+- `hr_analytics.employees` - Employee data
+- `hr_analytics.applicants` - Applicant data
+- `hr_analytics.employment_types` - Employment type data
+- `hr_analytics.role_department_mapping` - Role-department mappings
 
-### Production Features
-- **Docker Containerization**: Easy deployment and scaling
-- **Service Management**: Automated service startup/shutdown
-- **Logging**: Comprehensive log management
-- **Health Checks**: API and database health monitoring
+Analytics views provide:
+- Time-to-hire calculations
+- Hiring conversion rates
+- Employee tenure analysis
+- Data quality metrics
 
-## 🎯 Design Decisions & Assumptions
+## Data Pipeline
 
-### Technology Choices
-- **Streamlit**: Rapid development, data science focus, interactive components
-- **FastAPI**: High performance, type safety, auto documentation
-- **PostgreSQL**: ACID compliance, advanced analytics, scalability
-- **Docker**: Containerization for easy deployment
+The ETL process:
+1. Extracts data from Excel files
+2. Cleans and standardizes data
+3. Loads into PostgreSQL
+4. Creates analytics views
+5. Runs daily via cron: `0 2 * * * /path/to/scripts/daily_pipeline.sh`
 
-### Data Model Assumptions
-- **Realistic HR Data**: Not all applicants become employees
-- **Data Gaps**: Not all employees came through applications
-- **Role-Department Mapping**: Validated mappings from hired employees
-- **Graceful Degradation**: System works with missing data
+## Architecture
 
-### Leadership Focus
-- **CHRO/CPO Metrics**: Strategic insights for leadership
-- **Data Quality**: Realistic explanations of HR data limitations
-- **Actionable Insights**: Metrics that drive business decisions
-- **Professional Presentation**: Clean, branded visualizations
+### Backend
+- **FastAPI**: High-performance async API
+- **SQLAlchemy**: Database ORM
+- **PostgreSQL**: Primary database
 
-## 🔧 Troubleshooting
+### Frontend
+- **Streamlit**: Interactive dashboard
+- **Plotly**: Data visualizations
+
+### Infrastructure
+- **Docker**: Containerization
+- **Cron**: Daily automation
+- **Logging**: Comprehensive monitoring
+
+## Configuration
+
+### Environment Variables
+```bash
+DATABASE_URL=postgresql://hr_user:hr_password@localhost:5432/mrbeast_hr
+```
+
+### Database Setup
+```sql
+CREATE DATABASE mrbeast_hr;
+CREATE USER hr_user WITH PASSWORD 'hr_password';
+GRANT ALL PRIVILEGES ON DATABASE mrbeast_hr TO hr_user;
+```
+
+## Development
+
+### Project Structure
+```
+mrbeast-hris-analytics/
+├── api/                    # FastAPI backend
+├── scripts/               # Data pipeline
+├── visualizations/        # Streamlit dashboard
+├── sql/                  # Database schema
+├── data/                 # Data files
+└── assets/              # Static assets
+```
+
+### Adding New Features
+1. Update schema in `sql/01_schema.sql`
+2. Add endpoints in `api/main.py`
+3. Create visualizations in `visualizations/dashboard.py`
+4. Update pipeline scripts as needed
+
+## Troubleshooting
 
 ### Common Issues
 
-#### 1. **Database Connection Issues**
+**Database Connection Failed**
 ```bash
-# Check PostgreSQL status
 psql -h localhost -U hr_user -d mrbeast_hr -c "SELECT 1;"
 ```
 
-#### 2. **API Not Starting**
+**API Not Starting**
 ```bash
-# Check environment variables
+# Check environment
 echo $DATABASE_URL
 # Should be: postgresql://hr_user:hr_password@localhost:5432/mrbeast_hr
 ```
 
-#### 3. **Dashboard Loading Issues**
+**Dashboard Issues**
 - Clear browser cache
-- Check if API is running on port 8000
-- Verify database views are created
+- Verify API is running on port 8000
+- Check database views are created
 
-#### 4. **Virtual Environment Issues**
+**Virtual Environment**
 ```bash
-# Recreate virtual environment
 python -m venv venv
 venv\Scripts\pip install -r requirements.txt
 ```
 
-## 📁 Project Structure
+## Deployment
 
-```
-mrbeast-hris-analytics/
-├── api/                    # FastAPI backend
-│   ├── main.py            # API endpoints
-│   └── run_api.ps1/sh     # API startup scripts
-├── scripts/               # Data pipeline scripts
-│   ├── hr_data_pipeline.py
-│   ├── run_pipeline.ps1/sh
-│   ├── daily_pipeline.ps1/sh
-│   └── manage_services.sh
-├── visualizations/        # Streamlit dashboard
-│   ├── dashboard.py       # Main dashboard
-│   └── run_dashboard.ps1/sh
-├── sql/                  # Database schema
-│   └── 01_schema.sql     # Enhanced schema with views
-├── data/                 # Data files
-├── logs/                 # Application logs
-└── assets/              # Static assets
-```
-
-## 🚀 Deployment Options
-
-### Local Development
-- One-command setup scripts
-- Cross-platform compatibility
-- Comprehensive error handling
-
-### Docker Deployment
+### Docker
 ```bash
 docker-compose up -d
 ```
 
-### Production Deployment
-- Service management scripts
-- Automated health checks
+### Production
+- Use service management scripts
+- Configure logging
+- Set up monitoring
+
+## Design Decisions
+
+### Technology Stack
+- **FastAPI**: Performance and auto-documentation
+- **Streamlit**: Rapid dashboard development
+- **PostgreSQL**: ACID compliance and analytics
+- **Docker**: Consistent deployment
+
+### Data Model
+- Handles realistic HR data gaps
+- Graceful degradation with missing data
+- Validated role-department mappings
+
+### API Design
+- RESTful conventions
+- Comprehensive error handling
+- Basic authentication
+- Caching for performance
+
+## Evaluation Criteria
+
+### API Design
+- RESTful standards
+- Error handling (404s, 500s)
+- Scalable architecture
+
+### Code Quality
+- Well-structured code
+- Reproducible setup
+- Modular architecture
+
+### Database Design
+- Normalized schema
+- SQL transformations
+- Realistic data handling
+
+### Automation
+- Cron scheduling
 - Comprehensive logging
+- Error recovery
 
-## 📈 Evaluation Criteria Met
+### Visualization
+- Interactive charts
+- Leadership metrics
+- Real-time updates
 
-### ✅ API Design
-- RESTful standards with proper HTTP methods
-- Comprehensive error handling (404s, 500s)
-- Scalable architecture with caching
-- Auto-generated documentation
+### Documentation
+- Setup instructions
+- Design decisions
+- Assumptions documented
 
-### ✅ Code Quality
-- Well-structured, documented code
-- Reproducible setup process
-- Modular, maintainable architecture
+## Bonus Features
 
-### ✅ Database Design
-- Well-normalized, documented schema
-- Advanced SQL transformations
-- Realistic HR data handling
+- Basic authentication
+- Docker containerization
+- Basic alerting
+- Professional code structure
 
-### ✅ Automation
-- Daily pipeline with cron scheduling
-- Comprehensive logging system
-- Error handling and recovery
+## License
 
-### ✅ Visualization
-- Professional, interactive charts
-- Leadership-focused metrics
-- Real-time data updates
-
-### ✅ Documentation
-- Comprehensive setup instructions
-- Design decisions explained
-- Assumptions and limitations documented
-
-## 🎯 Bonus Features Implemented
-
-- ✅ **Basic Authentication**: HTTP Basic auth for APIs
-- ✅ **Docker Containerization**: Complete containerization setup
-- ✅ **Basic Alerting**: Pipeline failure detection and alerts
-- ✅ **Professional Code Structure**: Production-ready architecture
-
-## 📞 Support
-
-For questions or issues:
-- Check the troubleshooting section above
-- Review the technical documentation
-- Ensure all prerequisites are installed
+MIT License
 
 ---
 
-**This project demonstrates senior-level technical capabilities with a focus on real-world HR data challenges and leadership insights.** 
+*Documentation formatting derived from standard technical documentation best practices. Layout and structure overview provided by Claude AI assistant.* 
