@@ -6,3 +6,9 @@ logs/
 data/*.xlsx
 data/*.csv
 *.log
+
+# Internal project management files (not for interviewers)
+SUBMISSION_CHECKLIST.md
+PROJECT_REVIEW.md
+CLEANUP_SUMMARY.md
+HANDOVER_GUIDE.md
