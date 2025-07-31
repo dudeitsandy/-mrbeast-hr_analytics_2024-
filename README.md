@@ -75,6 +75,20 @@ streamlit run visualizations/dashboard.py
 - API Documentation: http://localhost:8000/docs
 - Health Check: http://localhost:8000/health
 
+## Screenshots & Demo
+
+### Dashboard Overview
+![Main Dashboard](screenshots/hranalytics1.png)
+
+### Key Analytics Views
+![Hiring Metrics](screenshots/hranalytics12.png)
+![Employment Types](screenshots/hranalytics13.png)
+![Salary Analysis](screenshots/hranalytics14.png)
+![Data Quality](screenshots/hranalytics15.png)
+
+### API Documentation
+The platform provides a comprehensive REST API with auto-generated documentation available at http://localhost:8000/docs when the API is running.
+
 ## Design Decisions & Business Rationale
 
 ### Technology Stack Selection
